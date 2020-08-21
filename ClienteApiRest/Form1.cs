@@ -34,31 +34,39 @@ namespace ClienteApiRest
         public void GetPerfil()
         {
            
-            txttoken.Text = respuesta.tokenDelUsuario;
+            
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", respuesta.tokenDelUsuario);
             var response = client.GetAsync("https://sigi.unan.edu.ni/RAServices/Api/PortalEstudiante/GetPortal");
 
-            MessageBox.Show(response.Result.Content.ReadAsStringAsync().Result);
+            //txttoken.Text = response.Result.Content.ReadAsStringAsync().Result;
+
+            List<Perfil> lista = new List<Perfil>();
+            lista.Add(Newtonsoft.Json.JsonConvert.DeserializeObject<Perfil>(response.Result.Content.ReadAsStringAsync().Result));
+
+           dataGridView1.DataSource= lista;
         }
 
         public void GetMarcas()
         {
 
-            txttoken.Text = respuesta.tokenDelUsuario;
+            
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", respuesta.tokenDelUsuario);
             var response = client.GetAsync("https://sigi.unan.edu.ni/RAServices/Api/PortalEstudiante/GetMarcas");
 
-            MessageBox.Show(response.Result.Content.ReadAsStringAsync().Result);
+           txttoken.Text= response.Result.Content.ReadAsStringAsync().Result;
         }
 
         public void GetEstadoCuenta()
         {
 
-            txttoken.Text = respuesta.tokenDelUsuario;
+            
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", respuesta.tokenDelUsuario);
             var response = client.GetAsync("https://sigi.unan.edu.ni/RAServices/Api/PortalEstudiante/GetEstadoDeCuenta");
 
-            MessageBox.Show(response.Result.Content.ReadAsStringAsync().Result);
+            
+            List<Cuenta> lista= Newtonsoft.Json.JsonConvert.DeserializeObject<List<Cuenta>>(response.Result.Content.ReadAsStringAsync().Result);
+
+            dataGridView2.DataSource = lista;
         }
 
 
@@ -95,5 +103,37 @@ namespace ClienteApiRest
 
         public string cuentaDeLUsuario { get; set; }
         public string tokenDelUsuario { get; set; }
+    }
+
+    class Perfil
+    {
+        public string Carnet { get; set; }
+        public string Facultad { get; set; }
+        public string Carrera { get; set; }
+        public string PlanDeEstudio { get; set; }
+        public string Modalidad { get; set; }
+        public string Turno { get; set; }
+        public string Nombres { get; set; }
+        public string Apellidos { get; set; }
+        public string Telefono { get; set; }
+        public string Correo { get; set; }
+        public string Sexo { get; set; }
+        public string EstadoCivil { get; set; }
+        public string SituacionLaboral { get; set; }
+        public string Direccion { get; set; }
+        public string CentroDeTrabajo { get; set; }
+        public string FechaDeNacimiento { get; set; }
+    }
+
+    public class Cuenta
+    {
+        public string CodigoDelTipoDeMovimiento { get; set; }
+        public string TipoDeMovimiento { get; set; }
+        public string Periodo { get; set; }
+        public string Fecha { get; set; }
+        public string Recibo { get; set; }
+        public string Concepto { get; set; }
+        public string Monto { get; set; }
+
     }
 }
