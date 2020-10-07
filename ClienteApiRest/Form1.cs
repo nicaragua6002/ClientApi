@@ -96,6 +96,12 @@ namespace ClienteApiRest
             respuesta = Newtonsoft.Json.JsonConvert.DeserializeObject<EData>(response.Result.Content.ReadAsStringAsync().Result);
             
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form2 f = new Form2();
+            f.Show();
+        }
     }
 
     class EData
